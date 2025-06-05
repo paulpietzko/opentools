@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="flex items-center space-x-2">
               <Wrench className="h-5 w-5 text-blue-600" />
               <span className="text-sm text-gray-600">
-                © 2024 <a href="https://www.paulpietzko.com">Paul Pietzko</a>. Open source and free to use.
+                © {new Date().getFullYear()} <a href="https://www.paulpietzko.com">Paul Pietzko</a>. Open source and free to use.
               </span>
             </div>
             <div className="flex items-center space-x-6">
