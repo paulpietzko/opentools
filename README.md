@@ -16,4 +16,4 @@ This project is actively being developed. Contributions, suggestions, and feedba
 ---
 
 💡 Want to contribute? Check out our [Contributing Guide](CONTRIBUTING.md)  
-🌐 Visit the live site: [opentools.dev](https://opentools.dev) _(Coming Soon)_
+🌐 Visit the live site: [opentools.ch](https://opentools.ch) _(Coming Soon)_

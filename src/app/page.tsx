@@ -1,103 +1,118 @@
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Github, Zap, Lock, Wrench, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-white">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center space-y-8">
+          {/* Status Badge */}
+          <Badge
+            variant="secondary"
+            className="bg-blue-50 text-blue-700 border-blue-200"
+          >
+            🚧 Work in Progress
+          </Badge>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/* Main Heading */}
+          <div className="space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
+              Simple Web Tools
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              An open-source collection of useful web-based utilities — all in
+              one place. Fast, lightweight, and privacy-friendly tools for
+              developers and designers.
+            </p>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+              <CardContent className="p-6 text-center">
+                <Wrench className="h-8 w-8 text-blue-600 mx-auto mb-3" />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Dozens of Tools
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Single-purpose utilities for everyday tasks
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+              <CardContent className="p-6 text-center">
+                <Zap className="h-8 w-8 text-green-600 mx-auto mb-3" />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Lightning Fast
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Responsive UI built with Next.js
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+              <CardContent className="p-6 text-center">
+                <Github className="h-8 w-8 text-purple-600 mx-auto mb-3" />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Open Source
+                </h3>
+                <p className="text-sm text-gray-600">
+                  100% free and open to contributions
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+              <CardContent className="p-6 text-center">
+                <Lock className="h-8 w-8 text-red-600 mx-auto mb-3" />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Privacy First
+                </h3>
+                <p className="text-sm text-gray-600">
+                  No data stored or sent to external servers
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Main CTA */}
+          <div className="pt-8">
+            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-12">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-semibold text-gray-900">
+                    Your Utility Belt Awaits
+                  </h2>
+                  <p className="text-gray-600">
+                    From image resizing to diff checking — fast, lightweight
+                    tools with no clutter, no bloat, and no nonsense.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+                    <Link href="/tools">
+                      Browse Tools
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link href="https://github.com/paulpietzko/opentools/">
+                      <Github className="mr-2 h-4 w-4" />
+                      View on GitHub
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
