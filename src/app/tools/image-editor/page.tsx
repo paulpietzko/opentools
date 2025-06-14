@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label";
 import {
   Wrench,
   ArrowLeft,
-  Upload,
   Download,
   RotateCw,
   FlipHorizontal,
@@ -21,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Footer from "@/components/footer";
+import ImageUploader from "@/components/image-uploader";
 
 interface ImageState {
   rotation: number;
@@ -58,33 +58,20 @@ export default function ImageEditorPage() {
   const [imageState, setImageState] = useState<ImageState>(initialState);
   const [aspectRatioLocked, setAspectRatioLocked] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setSelectedImage(result);
-
-        const img = new Image();
-        img.onload = () => {
-          setOriginalImage(img);
-          setImageState({
-            ...initialState,
-            width: img.width,
-            height: img.height,
-          });
-        };
-        img.src = result;
-      };
-      reader.readAsDataURL(file);
-    },
-    []
-  );
+  const handleImageSelect = useCallback((imageData: string) => {
+    setSelectedImage(imageData);
+    const img = new Image();
+    img.onload = () => {
+      setOriginalImage(img);
+      setImageState({
+        ...initialState,
+        width: img.width,
+        height: img.height,
+      });
+    };
+    img.src = imageData;
+  }, []);
 
   const applyImageEffects = useCallback(() => {
     const canvas = canvasRef.current;
@@ -214,17 +201,10 @@ export default function ImageEditorPage() {
     link.click();
   };
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleNewImage = () => {
     setSelectedImage(null);
     setOriginalImage(null);
     setImageState(initialState);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   return (
@@ -277,32 +257,7 @@ export default function ImageEditorPage() {
         </div>
 
         {!selectedImage ? (
-          /* Upload Area */
-          <div className="space-y-8">
-            <div
-              className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer hover:border-gray-400 transition-colors"
-              onClick={handleUploadClick}
-            >
-              <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Upload an Image
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Click to select an image file from your computer
-              </p>
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                Select Image
-              </Button>
-            </div>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-            />
-          </div>
+          <ImageUploader onSelectImage={handleImageSelect} />
         ) : (
           /* Image Editor Interface */
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
