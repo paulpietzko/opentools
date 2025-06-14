@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { diffWords, diffChars } from "diff";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -11,130 +12,140 @@ import {
 } from "@/components/ui/tooltip";
 import { Wrench, ArrowLeft, Copy, Check } from "lucide-react";
 import Link from "next/link";
+import Footer from "@/components/footer";
 
-interface DiffResult {
-  type: "equal" | "delete" | "insert";
+/**
+ * The approach here is:
+ * 1) Use diffWords to split text changes word-by-word.
+ * 2) When a word is "removed" or "added," use diffChars to highlight which characters changed
+ *    within that word. For the entire changed word (on left for removed, right for added),
+ *    use a lighter background color, and for the specific changed characters, use a darker color.
+ *
+ * - Left side (old text) only shows removals in red, normal words in default color.
+ * - Right side (new text) only shows additions in green, normal words in default color.
+ */
+
+interface WordDiff {
   value: string;
+  added?: boolean;
+  removed?: boolean;
 }
 
-function computeDiff(
-  oldText: string,
-  newText: string
-): { left: DiffResult[]; right: DiffResult[] } {
-  const left: DiffResult[] = [];
-  const right: DiffResult[] = [];
+function highlightWordDifferences(
+  fullWord: string,
+  isAdded: boolean,
+  isRemoved: boolean
+) {
+  // Use diffChars to find changed characters in the single word chunk
+  // Since we only have the "current" chunk, we can show everything as changed
+  // or compare it to an empty string for a simpler highlight
+  const reference = ""; // compare to empty so all characters appear as changed
+  const charDiff = diffChars(reference, fullWord);
 
-  let i = 0,
-    j = 0;
+  // Outer word styling (lighter background)
+  const wordBg = isRemoved
+    ? "bg-red-50 text-red-700"
+    : "bg-green-50 text-green-700";
 
-  while (i < oldText.length || j < newText.length) {
-    if (i < oldText.length && j < newText.length && oldText[i] === newText[j]) {
-      // Characters match - show on both sides
-      left.push({ type: "equal", value: oldText[i] });
-      right.push({ type: "equal", value: newText[j] });
-      i++;
-      j++;
-    } else {
-      // Find next matching sequence
-      let foundMatch = false;
+  // Inner character styling (darker background)
+  const charBg = isRemoved
+    ? "bg-red-200 text-red-900"
+    : "bg-green-200 text-green-900";
 
-      // Look ahead for matches
-      for (let k = 1; k <= 10; k++) {
-        if (
-          i + k < oldText.length &&
-          j < newText.length &&
-          oldText[i + k] === newText[j]
-        ) {
-          // Deletion in old text
-          for (let l = 0; l < k; l++) {
-            left.push({ type: "delete", value: oldText[i + l] });
-          }
-          i += k;
-          foundMatch = true;
-          break;
-        }
-        if (
-          j + k < newText.length &&
-          i < oldText.length &&
-          oldText[i] === newText[j + k]
-        ) {
-          // Insertion in new text
-          for (let l = 0; l < k; l++) {
-            right.push({ type: "insert", value: newText[j + l] });
-          }
-          j += k;
-          foundMatch = true;
-          break;
-        }
-      }
-
-      if (!foundMatch) {
-        // Handle single character diff
-        if (i < oldText.length) {
-          left.push({ type: "delete", value: oldText[i] });
-          i++;
-        }
-        if (j < newText.length) {
-          right.push({ type: "insert", value: newText[j] });
-          j++;
-        }
-      }
-    }
-  }
-
-  return { left, right };
+  return (
+    <span className={`${wordBg} px-0.5 rounded`}>
+      {charDiff.map((c, idx) => {
+        // For matching characters, it's "added" from empty => highlight darker
+        // For simplicity, highlight all characters as "changed"
+        return (
+          <span key={idx} className={charBg}>
+            {c.value}
+          </span>
+        );
+      })}
+    </span>
+  );
 }
 
 function DiffText({
-  diffs,
+  oldText,
+  newText,
   side,
   onDiffClick,
 }: {
-  diffs: DiffResult[];
+  oldText: string;
+  newText: string;
   side: "left" | "right";
-  onDiffClick: (type: string, value: string, side: "left" | "right") => void;
+  onDiffClick: (value: string, side: "left" | "right") => void;
 }) {
+  const wordDiffs = diffWords(oldText, newText);
+
   return (
     <div className="font-mono text-sm leading-relaxed whitespace-pre-wrap break-words">
-      {diffs.map((diff, index) => {
-        if (diff.type === "equal") {
-          return <span key={index}>{diff.value}</span>;
+      {wordDiffs.map((diff, idx) => {
+        const { value, added, removed } = diff as WordDiff;
+
+        // If it's the left side, we only show normal or removed text
+        if (side === "left") {
+          if (added) {
+            // In the left side, we skip additions
+            return null;
+          } else if (removed) {
+            // Removed chunk => highlight
+            return (
+              <TooltipProvider key={idx}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span
+                      className="cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={() => onDiffClick(value, side)}
+                    >
+                      {highlightWordDifferences(value, false, true)}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" sideOffset={6} className="text-xs">
+                    <p>Removed word(s)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          } else {
+            // Unchanged => print as normal
+            return <span key={idx}>{value}</span>;
+          }
         }
 
-        const isHighlighted =
-          (side === "left" && diff.type === "delete") ||
-          (side === "right" && diff.type === "insert");
-
-        if (!isHighlighted) {
-          return <span key={index}>{diff.value}</span>;
+        // If it's the right side, we only show normal or added text
+        if (side === "right") {
+          if (removed) {
+            // In the right side, we skip removals
+            return null;
+          } else if (added) {
+            // Added chunk => highlight
+            return (
+              <TooltipProvider key={idx}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span
+                      className="cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={() => onDiffClick(value, side)}
+                    >
+                      {highlightWordDifferences(value, true, false)}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" sideOffset={6} className="text-xs">
+                    <p>Added word(s)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          } else {
+            // Unchanged => print as normal
+            return <span key={idx}>{value}</span>;
+          }
         }
 
-        const bgColor =
-          diff.type === "delete"
-            ? "bg-red-100 text-red-800"
-            : "bg-green-100 text-green-800";
-        const tooltipText =
-          diff.type === "delete"
-            ? "Keep this text (merge from old)"
-            : "Keep this text (merge from new)";
-
-        return (
-          <TooltipProvider key={index}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span
-                  className={`${bgColor} cursor-pointer hover:opacity-80 transition-opacity px-0.5 rounded`}
-                  onClick={() => onDiffClick(diff.type, diff.value, side)}
-                >
-                  {diff.value}
-                </span>
-              </TooltipTrigger>
-              <TooltipContent side="top" sideOffset={6} className="text-xs">
-                <p>{tooltipText}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
+        return null;
       })}
     </div>
   );
@@ -146,21 +157,15 @@ export default function TextDiffPage() {
   const [showDiff, setShowDiff] = useState(false);
   const [copiedSide, setCopiedSide] = useState<"left" | "right" | null>(null);
 
-  const diffResult = useMemo(() => {
-    if (!showDiff || (!oldText && !newText)) return null;
-    return computeDiff(oldText, newText);
-  }, [oldText, newText, showDiff]);
+  const handleCheckDiff = () => {
+    setShowDiff(true);
+  };
 
-  const stats = useMemo(() => {
-    if (!diffResult) return { removals: 0, additions: 0 };
-
-    const removals = diffResult.left.filter((d) => d.type === "delete").length;
-    const additions = diffResult.right.filter(
-      (d) => d.type === "insert"
-    ).length;
-
-    return { removals, additions };
-  }, [diffResult]);
+  const handleReset = () => {
+    setShowDiff(false);
+    setOldText("");
+    setNewText("");
+  };
 
   const handleCopy = async (side: "left" | "right") => {
     const textToCopy = side === "left" ? oldText : newText;
@@ -173,24 +178,20 @@ export default function TextDiffPage() {
     }
   };
 
-  const handleDiffClick = (
-    type: string,
-    value: string,
-    side: "left" | "right"
-  ) => {
-    console.log("Diff clicked:", { type, value, side });
-    // Future: Implement merge functionality
+  const onDiffClick = (value: string, side: "left" | "right") => {
+    console.log("Diff clicked:", { value, side });
+    // Future: Implement a merge feature or other actions
   };
 
-  const handleCheckDiff = () => {
-    setShowDiff(true);
-  };
-
-  const handleReset = () => {
-    setShowDiff(false);
-    setOldText("");
-    setNewText("");
-  };
+  const stats = useMemo(() => {
+    if (!showDiff || (!oldText && !newText)) {
+      return { removals: 0, additions: 0 };
+    }
+    const diffs = diffWords(oldText, newText);
+    const removals = diffs.filter((d) => d.removed).length;
+    const additions = diffs.filter((d) => d.added).length;
+    return { removals, additions };
+  }, [oldText, newText, showDiff]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -242,7 +243,6 @@ export default function TextDiffPage() {
         </div>
 
         {!showDiff ? (
-          /* Input Mode */
           <div className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Old Text */}
@@ -272,7 +272,6 @@ export default function TextDiffPage() {
               </div>
             </div>
 
-            {/* Action Button */}
             <div className="text-center">
               <Button
                 onClick={handleCheckDiff}
@@ -287,7 +286,6 @@ export default function TextDiffPage() {
         ) : (
           /* Diff Results */
           <div className="space-y-6">
-            {/* Stats Header */}
             <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg p-4">
               <div className="flex items-center space-x-6">
                 {stats.removals > 0 && (
@@ -330,28 +328,25 @@ export default function TextDiffPage() {
               </Button>
             </div>
 
-            {/* Diff Display */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
-              {/* Left Side - Old Text with deletions highlighted */}
+              {/* Left Side - old text (red) */}
               <div className="border border-gray-200 bg-white p-4 font-mono text-sm">
-                {diffResult && (
-                  <DiffText
-                    diffs={diffResult.left}
-                    side="left"
-                    onDiffClick={handleDiffClick}
-                  />
-                )}
+                <DiffText
+                  oldText={oldText}
+                  newText={newText}
+                  side="left"
+                  onDiffClick={onDiffClick}
+                />
               </div>
 
-              {/* Right Side - New Text with additions highlighted */}
+              {/* Right Side - new text (green) */}
               <div className="border border-gray-200 bg-white p-4 font-mono text-sm">
-                {diffResult && (
-                  <DiffText
-                    diffs={diffResult.right}
-                    side="right"
-                    onDiffClick={handleDiffClick}
-                  />
-                )}
+                <DiffText
+                  oldText={oldText}
+                  newText={newText}
+                  side="right"
+                  onDiffClick={onDiffClick}
+                />
               </div>
             </div>
           </div>
@@ -359,33 +354,7 @@ export default function TextDiffPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 mt-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-2">
-              <Wrench className="h-5 w-5 text-blue-600" />
-              <span className="text-sm text-gray-600">
-                © 2024 <a href="https://www.paulpietzko.com">Paul Pietzko</a>.
-                Open source and free to use.
-              </span>
-            </div>
-            <div className="flex items-center space-x-6">
-              <Link
-                href="https://github.com/paulpietzko/opentools/blob/main/CONTRIBUTING.md"
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                Contributing Guide
-              </Link>
-              <Link
-                href="https://github.com/paulpietzko/opentools/"
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                GitHub
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
