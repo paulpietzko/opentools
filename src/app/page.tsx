@@ -3,10 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Github, Zap, Lock, Wrench, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
+      <Navbar />
+
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center space-y-8">
           {/* Status Badge */}
@@ -95,7 +99,11 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
                     <Link href="/tools">
                       Browse Tools
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -113,6 +121,8 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 }
