@@ -311,7 +311,7 @@ export default function ColorPickerPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -417,17 +417,17 @@ export default function ColorPickerPage() {
             </div>
 
             {/* Right Side - Color Information */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">
                 Color Information
               </h3>
 
               {/* Selected Color */}
               {selectedColor ? (
-                <div className="space-y-4">
+                <div>
                   {/* Color Preview */}
                   <Card className="border-gray-200">
-                    <CardContent className="p-6">
+                    <CardContent>
                       <h4 className="text-sm font-medium text-gray-700 mb-4">
                         Selected Color
                       </h4>

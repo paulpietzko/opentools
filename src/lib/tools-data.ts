@@ -1,8 +1,4 @@
-import {
-  FileImage,
-  GitCompare,
-  LucideProps,
-} from "lucide-react";
+import { Edit, FileImage, GitCompare, LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 export interface Tool {
@@ -47,6 +43,16 @@ export const tools: Tool[] = [
     status: "available",
     href: "/tools/color-picker",
     featured: false,
+  },
+  {
+    id: "image-editor",
+    name: "Image Editor",
+    description: "Edit images with rotation, resizing, filters, and more",
+    category: "image",
+    icon: Edit,
+    status: "available",
+    href: "/tools/image-editor",
+    featured: true,
   },
   {
     id: "image-compressor",

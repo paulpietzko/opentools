@@ -11,7 +11,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center space-y-8">
           {/* Status Badge */}
           <Badge

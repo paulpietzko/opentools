@@ -9,7 +9,7 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">All Tools</h1>
