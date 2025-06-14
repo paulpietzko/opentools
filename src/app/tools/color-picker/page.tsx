@@ -81,8 +81,18 @@ export default function ColorPickerPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
+    (
+      event:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.DragEvent<HTMLDivElement>
+    ) => {
+      let file: File | undefined;
+      if ("dataTransfer" in event) {
+        event.preventDefault();
+        file = event.dataTransfer.files?.[0];
+      } else {
+        file = event.target.files?.[0];
+      }
       if (!file) return;
 
       const reader = new FileReader();
@@ -121,15 +131,12 @@ export default function ColorPickerPage() {
     const magCtx = magnifier.getContext("2d");
     if (!ctx || !magCtx) return;
 
-    // Clear magnifier
     magCtx.clearRect(0, 0, magnifier.width, magnifier.height);
 
-    // Set magnifier size
     const magSize = 100;
     const zoomLevel = 8;
     const sourceSize = magSize / zoomLevel;
 
-    // Calculate source area (centered on cursor)
     const sourceX = Math.max(
       0,
       Math.min(canvas.width - sourceSize, x - sourceSize / 2)
@@ -139,7 +146,6 @@ export default function ColorPickerPage() {
       Math.min(canvas.height - sourceSize, y - sourceSize / 2)
     );
 
-    // Draw magnified area
     magCtx.imageSmoothingEnabled = false;
     magCtx.drawImage(
       canvas,
@@ -153,7 +159,6 @@ export default function ColorPickerPage() {
       magSize
     );
 
-    // Draw crosshair
     magCtx.strokeStyle = "#fff";
     magCtx.lineWidth = 2;
     magCtx.beginPath();
@@ -163,7 +168,6 @@ export default function ColorPickerPage() {
     magCtx.lineTo(magSize / 2, magSize / 2 + 10);
     magCtx.stroke();
 
-    // Draw border
     magCtx.strokeStyle = "#000";
     magCtx.lineWidth = 1;
     magCtx.strokeRect(0, 0, magSize, magSize);
@@ -224,7 +228,6 @@ export default function ColorPickerPage() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Set canvas size to match image aspect ratio while fitting container
     const maxWidth = 500;
     const maxHeight = 400;
     let { width, height } = img;
@@ -267,6 +270,11 @@ export default function ColorPickerPage() {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+  };
+
+  // Drag & Drop handlers
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
   };
 
   return (
@@ -319,18 +327,20 @@ export default function ColorPickerPage() {
         </div>
 
         {!selectedImage ? (
-          /* Upload Area */
+          /* Upload & Dropzone Area */
           <div className="space-y-8">
             <div
               className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer hover:border-gray-400 transition-colors"
               onClick={handleUploadClick}
+              onDragOver={handleDragOver}
+              onDrop={handleImageUpload}
             >
               <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Upload an Image
+                Upload or Drag & Drop an Image
               </h3>
               <p className="text-gray-600 mb-4">
-                Click to select an image file from your computer
+                Click to select an image file or simply drop it here
               </p>
               <Button className="bg-blue-600 hover:bg-blue-700">
                 Select Image
@@ -397,6 +407,17 @@ export default function ColorPickerPage() {
               <p className="text-sm text-gray-600">
                 Hover to see magnified view, click to select a color
               </p>
+
+              {/* Actions */}
+              <div className="pt-4">
+                <Button
+                  onClick={handleReset}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Upload New Image
+                </Button>
+              </div>
             </div>
 
             {/* Right Side - Color Information */}
@@ -415,11 +436,24 @@ export default function ColorPickerPage() {
                         Selected Color
                       </h4>
                       <div
-                        className="w-full h-20 rounded-lg border border-gray-200 mb-4"
+                        className="w-full h-20 rounded-lg border border-gray-200 mb-4 flex items-center justify-center"
                         style={{ backgroundColor: selectedColor.hex }}
-                      />
-                      <div className="text-center">
-                        <span className="text-xl font-mono font-bold text-gray-900">
+                      >
+                        <span
+                          className="text-3xl font-mono font-bold "
+                          style={{
+                            color: (() => {
+                              // Use luminance to determine if background is dark
+                              const hex = selectedColor.hex.replace("#", "");
+                              const r = parseInt(hex.substring(0, 2), 16);
+                              const g = parseInt(hex.substring(2, 4), 16);
+                              const b = parseInt(hex.substring(4, 6), 16);
+                              const luminance =
+                                0.299 * r + 0.587 * g + 0.114 * b;
+                              return luminance < 140 ? "#fff" : "#111";
+                            })(),
+                          }}
+                        >
                           {selectedColor.hex}
                         </span>
                       </div>
@@ -481,17 +515,6 @@ export default function ColorPickerPage() {
                   </CardContent>
                 </Card>
               )}
-
-              {/* Actions */}
-              <div className="pt-4">
-                <Button
-                  onClick={handleReset}
-                  variant="outline"
-                  className="w-full"
-                >
-                  Upload New Image
-                </Button>
-              </div>
             </div>
           </div>
         )}
