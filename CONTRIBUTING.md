@@ -36,7 +36,7 @@ We are committed to a harassment-free, inclusive environment. Please read our [C
    ```bash
    git clone https://github.com/paulpietzko/opentools.git
    cd opentools
-````
+   ```
 
 2. Install dependencies:
 
@@ -98,5 +98,3 @@ By contributing, you agree that your contributions will be licensed under the [M
 We appreciate your help in making **OpenTools** better for everyone! 🚀
 
 ```
-
-Let me know if you want it customized for monorepo structure, internationalization, or automated workflows like Prettier/lint-staged.

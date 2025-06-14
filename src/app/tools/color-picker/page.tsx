@@ -12,9 +12,7 @@ import Footer from "@/components/footer";
 interface ColorInfo {
   hex: string;
   rgb: string;
-  rgba: string;
   hsl: string;
-  hsla: string;
 }
 
 interface MousePosition {
@@ -54,17 +52,15 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
 }
 
-function getColorInfo(r: number, g: number, b: number, a = 255): ColorInfo {
+function getColorInfo(r: number, g: number, b: number): ColorInfo {
   const hex = `#${r.toString(16).padStart(2, "0")}${g
     .toString(16)
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
   const rgb = `rgb(${r}, ${g}, ${b})`;
-  const rgba = `rgba(${r}, ${g}, ${b}, ${(a / 255).toFixed(2)})`;
   const [h, s, l] = rgbToHsl(r, g, b);
   const hsl = `hsl(${h}, ${s}%, ${l}%)`;
-  const hsla = `hsla(${h}, ${s}%, ${l}%, ${(a / 255).toFixed(2)})`;
 
-  return { hex, rgb, rgba, hsl, hsla };
+  return { hex, rgb, hsl };
 }
 
 export default function ColorPickerPage() {
@@ -115,9 +111,9 @@ export default function ColorPickerPage() {
       if (!ctx) return null;
 
       const imageData = ctx.getImageData(x, y, 1, 1);
-      const [r, g, b, a] = imageData.data;
+      const [r, g, b] = imageData.data;
 
-      return getColorInfo(r, g, b, a);
+      return getColorInfo(r, g, b);
     },
     []
   );
