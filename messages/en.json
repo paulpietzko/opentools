@@ -1,0 +1,31 @@
+{
+  "LandingPage": {
+    "statusBadge": "🚧 Work in Progress",
+    "mainHeading": "Simple Web Tools",
+    "mainSubheading": "An open-source collection of useful web-based utilities — all in one place. Fast, lightweight, and privacy-friendly tools for developers and designers.",
+    "featureCards": {
+      "tools": {
+        "title": "Dozens of Tools",
+        "description": "Single-purpose utilities for everyday tasks"
+      },
+      "speed": {
+        "title": "Lightning Fast",
+        "description": "Responsive UI built with Next.js"
+      },
+      "openSource": {
+        "title": "Open Source",
+        "description": "100% free and open to contributions"
+      },
+      "privacy": {
+        "title": "Privacy First",
+        "description": "No data stored or sent to external servers"
+      }
+    },
+    "cta": {
+      "heading": "Your Utility Belt Awaits",
+      "description": "From image resizing to diff checking — fast, lightweight tools with no clutter, no bloat, and no nonsense.",
+      "browseTools": "Browse Tools",
+      "viewOnGithub": "View on GitHub"
+    }
+  }
+}

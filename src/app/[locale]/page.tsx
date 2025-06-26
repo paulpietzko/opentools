@@ -5,8 +5,11 @@ import { Github, Zap, Lock, Wrench, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { useTranslations } from "next-intl";
 
 export default function HomePage() {
+  const t = useTranslations("LandingPage");
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -18,18 +21,16 @@ export default function HomePage() {
             variant="secondary"
             className="bg-blue-50 text-blue-700 border-blue-200"
           >
-            🚧 Work in Progress
+            {t("statusBadge")}
           </Badge>
 
           {/* Main Heading */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
-              Simple Web Tools
+              {t("mainHeading")}
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              An open-source collection of useful web-based utilities — all in
-              one place. Fast, lightweight, and privacy-friendly tools for
-              developers and designers.
+              {t("mainSubheading")}
             </p>
           </div>
 
@@ -39,10 +40,10 @@ export default function HomePage() {
               <CardContent className="p-6 text-center">
                 <Wrench className="h-8 w-8 text-blue-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Dozens of Tools
+                  {t("featureCards.tools.title")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Single-purpose utilities for everyday tasks
+                  {t("featureCards.tools.description")}
                 </p>
               </CardContent>
             </Card>
@@ -51,10 +52,10 @@ export default function HomePage() {
               <CardContent className="p-6 text-center">
                 <Zap className="h-8 w-8 text-green-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Lightning Fast
+                  {t("featureCards.speed.title")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Responsive UI built with Next.js
+                  {t("featureCards.speed.description")}
                 </p>
               </CardContent>
             </Card>
@@ -63,10 +64,10 @@ export default function HomePage() {
               <CardContent className="p-6 text-center">
                 <Github className="h-8 w-8 text-purple-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Open Source
+                  {t("featureCards.openSource.title")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  100% free and open to contributions
+                  {t("featureCards.openSource.description")}
                 </p>
               </CardContent>
             </Card>
@@ -75,10 +76,10 @@ export default function HomePage() {
               <CardContent className="p-6 text-center">
                 <Lock className="h-8 w-8 text-red-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-900 mb-2">
-                  Privacy First
+                  {t("featureCards.privacy.title")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  No data stored or sent to external servers
+                  {t("featureCards.privacy.description")}
                 </p>
               </CardContent>
             </Card>
@@ -90,12 +91,9 @@ export default function HomePage() {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-semibold text-gray-900">
-                    Your Utility Belt Awaits
+                    {t("cta.heading")}
                   </h2>
-                  <p className="text-gray-600">
-                    From image resizing to diff checking — fast, lightweight
-                    tools with no clutter, no bloat, and no nonsense.
-                  </p>
+                  <p className="text-gray-600">{t("cta.description")}</p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -105,14 +103,14 @@ export default function HomePage() {
                     className="bg-blue-600 hover:bg-blue-700"
                   >
                     <Link href="/tools">
-                      Browse Tools
+                      {t("cta.browseTools")}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg">
                     <Link href="https://github.com/paulpietzko/opentools/">
                       <Github className="mr-2 h-4 w-4" />
-                      View on GitHub
+                      {t("cta.viewOnGithub")}
                     </Link>
                   </Button>
                 </div>
@@ -121,7 +119,7 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

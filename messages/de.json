@@ -1,0 +1,31 @@
+{
+  "LandingPage": {
+    "statusBadge": "🚧 In Bearbeitung",
+    "mainHeading": "Einfache Web-Tools",
+    "mainSubheading": "Eine Open-Source-Sammlung nützlicher webbasierter Dienstprogramme — alles an einem Ort. Schnelle, leichtgewichtige und datenschutzfreundliche Tools für Entwickler und Designer.",
+    "featureCards": {
+      "tools": {
+        "title": "Dutzende von Tools",
+        "description": "Zweckmäßige Hilfsmittel für alltägliche Aufgaben"
+      },
+      "speed": {
+        "title": "Blitzschnell",
+        "description": "Responsive Benutzeroberfläche mit Next.js"
+      },
+      "openSource": {
+        "title": "Open Source",
+        "description": "100% kostenlos und offen für Beiträge"
+      },
+      "privacy": {
+        "title": "Datenschutz zuerst",
+        "description": "Keine Daten gespeichert oder an externe Server gesendet"
+      }
+    },
+    "cta": {
+      "heading": "Dein Werkzeuggürtel wartet",
+      "description": "Von der Bildgrößenanpassung bis zur Diff-Prüfung — schnelle, leichte Tools ohne Unordnung, ohne Aufblähung und ohne Unsinn.",
+      "browseTools": "Tools durchsuchen",
+      "viewOnGithub": "Auf GitHub ansehen"
+    }
+  }
+}
