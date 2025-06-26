@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Wrench } from "lucide-react";
+import { LocaleSwitcher } from "./locale-switcher";
+import { ThemeSwitcher } from "./theme-switcher";
 
 export default function Navbar() {
   return (
@@ -18,6 +20,8 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
+            <LocaleSwitcher />
+            <ThemeSwitcher />
             <Link
               href="https://www.paulpietzko.com"
               className="text-sm text-gray-600 hover:text-gray-900"
