@@ -27,5 +27,16 @@
       "browseTools": "Browse Tools",
       "viewOnGithub": "View on GitHub"
     }
+  },
+  "Navbar": {
+    "navLinks": {
+      "backToTools": "Back to Tools",
+      "creator": "Creator",
+      "browseTools": "Browse Tools"
+    }
+  },
+  "Footer": {
+    "allRightsReserved": "All rights reserved.",
+    "contributingGuide": "Contributing Guide"
   }
 }
