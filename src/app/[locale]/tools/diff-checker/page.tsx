@@ -11,7 +11,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Copy, Check } from "lucide-react";
-import Footer from "@/components/footer";
 
 /**
  * The approach here is:
@@ -315,9 +314,6 @@ export default function TextDiffPage() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

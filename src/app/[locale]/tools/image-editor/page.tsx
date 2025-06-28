@@ -16,7 +16,6 @@ import {
   RotateCcw,
   RefreshCw,
 } from "lucide-react";
-import Footer from "@/components/footer";
 import ImageUploader from "@/components/image-uploader";
 
 interface ImageState {
@@ -468,9 +467,6 @@ export default function ImageEditorPage() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

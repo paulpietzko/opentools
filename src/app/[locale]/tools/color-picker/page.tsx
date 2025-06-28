@@ -5,7 +5,6 @@ import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Copy, Check } from "lucide-react";
-import Footer from "@/components/footer";
 import ImageUploader from "@/components/image-uploader";
 
 interface ColorInfo {
@@ -417,9 +416,6 @@ export default function ColorPickerPage() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

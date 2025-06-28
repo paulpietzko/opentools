@@ -6,8 +6,11 @@ import { ArrowLeft, Wrench } from "lucide-react";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeSwitcher } from "./theme-switcher";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
+  const t = useTranslations("Navbar");
+
   const pathname = usePathname();
   const isToolsPage = pathname.includes("/tools/");
 
@@ -20,7 +23,7 @@ export default function Navbar() {
               <Button asChild variant="ghost" size="sm">
                 <Link href="/tools" className="flex items-center space-x-2">
                   <ArrowLeft className="h-4 w-4" />
-                  <span>Back to Tools</span>
+                  <span>{t("navLinks.backToTools")}</span>
                 </Link>
               </Button>
             )}
@@ -43,7 +46,7 @@ export default function Navbar() {
               href="https://www.paulpietzko.com"
               className="text-sm text-gray-600 hover:text-gray-900"
             >
-              Creator
+              {t("navLinks.creator")}
             </Link>
             <Link
               href="https://github.com/paulpietzko/opentools/"
@@ -52,7 +55,7 @@ export default function Navbar() {
               GitHub
             </Link>
             <Button asChild variant="default" size="sm">
-              <Link href="/tools">Browse Tools</Link>
+              <Link href="/tools">{t("navLinks.browseTools")}</Link>
             </Button>
           </nav>
         </div>
