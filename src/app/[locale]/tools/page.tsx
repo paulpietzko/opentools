@@ -1,14 +1,11 @@
 "use client";
 
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
 import ToolCard from "@/components/tools/tool-card";
 import { tools } from "@/lib/tools-data";
 
 export default function ToolsPage() {
   return (
     <div className="min-h-screen">
-      <Navbar />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-16">
@@ -25,7 +22,6 @@ export default function ToolsPage() {
           ))}
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

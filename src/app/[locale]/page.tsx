@@ -3,8 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Github, Zap, Lock, Wrench, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
 import { useTranslations } from "next-intl";
 
 export default function HomePage() {
@@ -12,8 +10,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center space-y-8">
           {/* Status Badge */}
@@ -119,8 +115,6 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
