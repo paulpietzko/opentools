@@ -23,23 +23,26 @@ export default function Navbar() {
               <Button asChild variant="ghost" size="sm">
                 <Link href="/tools" className="flex items-center space-x-2">
                   <ArrowLeft className="h-4 w-4" />
-                  <span>{t("navLinks.backToTools")}</span>
+                  <span className="hidden md:inline">
+                    {t("navLinks.backToTools")}
+                  </span>
                 </Link>
               </Button>
             )}
-
-            <Link
-              href="https://www.opentools.ch"
-              className="flex items-center space-x-2"
-            >
-              <Wrench className="h-6 w-6 text-blue-600" />
-              <span className="text-xl font-semibold text-gray-900">
-                OpenTools
-              </span>
-            </Link>
+            <div className="hidden sm:inline">
+              <Link
+                href="https://www.opentools.ch"
+                className="flex items-center space-x-2"
+              >
+                <Wrench className="h-6 w-6 text-blue-600" />
+                <span className="text-xl font-semibold text-gray-900">
+                  OpenTools
+                </span>
+              </Link>
+            </div>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="flex items-center space-x-8">
             <LocaleSwitcher />
             <ThemeSwitcher />
             <Link
@@ -54,9 +57,13 @@ export default function Navbar() {
             >
               GitHub
             </Link>
-            <Button asChild variant="default" size="sm">
-              <Link href="/tools">{t("navLinks.browseTools")}</Link>
-            </Button>
+            {!isToolsPage && (
+              <div className="hidden md:block">
+                <Button asChild variant="default" size="sm">
+                  <Link href="/tools">{t("navLinks.browseTools")}</Link>
+                </Button>
+              </div>
+            )}
           </nav>
         </div>
       </div>
