@@ -44,10 +44,10 @@ export default function Navbar() {
             <LocaleSwitcher />
             <ThemeSwitcher />
             <Link
-              href="https://www.paulpietzko.com"
+              href="https://www.paypal.com/paypalme/aspecsweb"
               className="text-sm hover:underline"
             >
-              {t("navLinks.creator")}
+              {t("navLinks.donate")}
             </Link>
             <Link
               href="https://github.com/paulpietzko/opentools/"
