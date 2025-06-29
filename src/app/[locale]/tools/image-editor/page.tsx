@@ -208,10 +208,8 @@ export default function ImageEditorPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Image Editor
-          </h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-4xl font-bold mb-4">Image Editor</h1>
+          <p className="text-xl">
             Upload an image and edit it with various tools
           </p>
         </div>
@@ -224,7 +222,7 @@ export default function ImageEditorPage() {
             {/* Left Side - Image Preview */}
             <div className="xl:col-span-2 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Preview</h3>
+                <h3 className="text-lg font-semibold">Preview</h3>
                 <div className="flex space-x-2">
                   <Button onClick={handleReset} variant="outline" size="sm">
                     <RefreshCw className="h-4 w-4 mr-2" />
@@ -240,11 +238,11 @@ export default function ImageEditorPage() {
                   </Button>
                 </div>
               </div>
-              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm p-4">
+              <div className="border border-border rounded-lg overflow-hidden bg-background shadow-sm p-4">
                 <div className="flex justify-center">
                   <canvas
                     ref={canvasRef}
-                    className="max-w-full max-h-[500px] border border-gray-100 rounded"
+                    className="max-w-full max-h-[500px] border border-border rounded"
                     style={{ objectFit: "contain" }}
                   />
                 </div>
@@ -253,15 +251,12 @@ export default function ImageEditorPage() {
 
             {/* Right Side - Controls */}
             <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Edit Tools
-              </h3>
+              <h3 className="text-lg font-semibold">Edit Tools</h3>
 
               {/* Transform Controls */}
-              <Card className="border-gray-200">
+              <Card>
                 <CardContent className="p-4">
-                  <h4 className="font-medium text-gray-900 mb-4">Transform</h4>
-
+                  <h4 className="font-medium mb-4">Transform</h4>
                   {/* Rotation */}
                   <div className="space-y-3 mb-4">
                     <Label className="text-sm font-medium">Rotation</Label>
@@ -338,8 +333,9 @@ export default function ImageEditorPage() {
               </Card>
 
               {/* Size Controls */}
-              <Card className="border-gray-200">
+              <Card>
                 <CardContent className="p-4">
+                  <h4 className="font-medium mb-4">Size</h4>
                   <h4 className="font-medium text-gray-900 mb-4">Size</h4>
 
                   <div className="space-y-3">
@@ -391,7 +387,7 @@ export default function ImageEditorPage() {
               </Card>
 
               {/* Adjustments */}
-              <Card className="border-gray-200">
+              <Card>
                 <CardContent className="p-4">
                   <h4 className="font-medium text-gray-900 mb-4">
                     Adjustments

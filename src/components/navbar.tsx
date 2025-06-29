@@ -15,7 +15,7 @@ export default function Navbar() {
   const isToolsPage = pathname.includes("/tools/");
 
   return (
-    <header className="border-b border-gray-100">
+    <header className="border-b border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
@@ -35,9 +35,7 @@ export default function Navbar() {
                 className="flex items-center space-x-2"
               >
                 <Wrench className="h-6 w-6 text-blue-600" />
-                <span className="text-xl font-semibold text-gray-900">
-                  OpenTools
-                </span>
+                <span className="text-xl font-semibold">OpenTools</span>
               </Link>
             </div>
           </div>
@@ -47,13 +45,13 @@ export default function Navbar() {
             <ThemeSwitcher />
             <Link
               href="https://www.paulpietzko.com"
-              className="text-sm text-gray-600 hover:text-gray-900"
+              className="text-sm hover:underline"
             >
               {t("navLinks.creator")}
             </Link>
             <Link
               href="https://github.com/paulpietzko/opentools/"
-              className="text-sm text-gray-600 hover:text-gray-900"
+              className="text-sm hover:underline"
             >
               GitHub
             </Link>

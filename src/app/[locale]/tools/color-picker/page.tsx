@@ -242,12 +242,8 @@ export default function ColorPickerPage() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Color Picker
-          </h1>
-          <p className="text-xl text-gray-600">
-            Upload an image and click to extract colors
-          </p>
+          <h1 className="text-4xl font-bold mb-4">Color Picker</h1>
+          <p className="text-xl">Upload an image and click to extract colors</p>
         </div>
 
         {!selectedImage ? (
@@ -257,9 +253,9 @@ export default function ColorPickerPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Side - Image */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">Image</h3>
+              <h3 className="text-lg font-semibold">Image</h3>
               <div className="relative">
-                <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                <div className="border border-border rounded-lg overflow-hidden bg-background shadow-sm">
                   <canvas
                     ref={canvasRef}
                     onClick={handleCanvasClick}
@@ -301,7 +297,7 @@ export default function ColorPickerPage() {
                   </div>
                 )}
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm">
                 Hover to see magnified view, click to select a color
               </p>
 
@@ -319,21 +315,19 @@ export default function ColorPickerPage() {
 
             {/* Right Side - Color Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Color Information
-              </h3>
+              <h3 className="text-lg font-semibold">Color Information</h3>
 
               {/* Selected Color */}
               {selectedColor ? (
                 <div>
                   {/* Color Preview */}
-                  <Card className="border-gray-200">
+                  <Card>
                     <CardContent>
-                      <h4 className="text-sm font-medium text-gray-700 mb-4">
+                      <h4 className="text-sm font-medium mb-4">
                         Selected Color
                       </h4>
                       <div
-                        className="w-full h-20 rounded-lg border border-gray-200 mb-4 flex items-center justify-center"
+                        className="w-full h-20 rounded-lg border border-border mb-4 flex items-center justify-center"
                         style={{ backgroundColor: selectedColor.hex }}
                       >
                         <span
@@ -355,7 +349,7 @@ export default function ColorPickerPage() {
                         </span>
                       </div>
 
-                      <h4 className="text-sm font-medium text-gray-700 mt-4 mb-4">
+                      <h4 className="text-sm font-medium mt-4 mb-4">
                         All Formats
                       </h4>
                       <div className="space-y-3">
@@ -363,15 +357,13 @@ export default function ColorPickerPage() {
                           ([format, value]) => (
                             <div
                               key={format}
-                              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                              className="flex items-center justify-between p-3 bg-muted rounded-lg"
                             >
                               <div>
-                                <div className="text-xs font-medium text-gray-500 uppercase">
+                                <div className="text-xs font-medium uppercase">
                                   {format}
                                 </div>
-                                <div className="font-mono text-sm text-gray-900">
-                                  {value}
-                                </div>
+                                <div className="font-mono text-sm">{value}</div>
                               </div>
                               <Button
                                 onClick={() =>
@@ -401,14 +393,12 @@ export default function ColorPickerPage() {
                   </Card>
                 </div>
               ) : (
-                <Card className="border-gray-200">
+                <Card>
                   <CardContent className="p-8 text-center">
                     <div className="text-gray-400 mb-2">
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg mx-auto mb-3" />
+                      <div className="w-16 h-16 bg-muted rounded-lg mx-auto mb-3" />
                     </div>
-                    <p className="text-gray-600">
-                      Click on the image to select a color
-                    </p>
+                    <p>Click on the image to select a color</p>
                   </CardContent>
                 </Card>
               )}

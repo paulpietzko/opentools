@@ -15,66 +15,62 @@ export default function HomePage() {
           {/* Status Badge */}
           <Badge
             variant="secondary"
-            className="bg-blue-50 text-blue-700 border-blue-200"
+            className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700"
           >
             {t("statusBadge")}
           </Badge>
 
           {/* Main Heading */}
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
               {t("mainHeading")}
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed">
               {t("mainSubheading")}
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+            <Card>
               <CardContent className="p-6 text-center">
                 <Wrench className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">
+                <h3 className="font-semibold mb-2">
                   {t("featureCards.tools.title")}
                 </h3>
-                <p className="text-sm text-gray-600">
-                  {t("featureCards.tools.description")}
-                </p>
+                <p className="text-sm">{t("featureCards.tools.description")}</p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+            <Card>
               <CardContent className="p-6 text-center">
                 <Zap className="h-8 w-8 text-green-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">
+                <h3 className="font-semibold mb-2">
                   {t("featureCards.speed.title")}
                 </h3>
-                <p className="text-sm text-gray-600">
-                  {t("featureCards.speed.description")}
-                </p>
+                <p className="text-sm">{t("featureCards.speed.description")}</p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+            <Card>
               <CardContent className="p-6 text-center">
                 <Github className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">
+                <h3 className="font-semibold mb-2">
                   {t("featureCards.openSource.title")}
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm">
                   {t("featureCards.openSource.description")}
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-gray-200 hover:border-gray-300 transition-colors">
+            <Card>
               <CardContent className="p-6 text-center">
                 <Lock className="h-8 w-8 text-red-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">
+                <h3 className="font-semibold mb-2">
                   {t("featureCards.privacy.title")}
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm">
                   {t("featureCards.privacy.description")}
                 </p>
               </CardContent>
@@ -83,20 +79,18 @@ export default function HomePage() {
 
           {/* Main CTA */}
           <div className="pt-8">
-            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-12">
+            <div className="bg-background border-2 border-dashed border-border rounded-lg p-12">
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-semibold text-gray-900">
-                    {t("cta.heading")}
-                  </h2>
-                  <p className="text-gray-600">{t("cta.description")}</p>
+                  <h2 className="text-2xl font-semibold">{t("cta.heading")}</h2>
+                  <p>{t("cta.description")}</p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
                     asChild
                     size="lg"
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-blue-600 text-white hover:bg-blue-700"
                   >
                     <Link href="/tools">
                       {t("cta.browseTools")}

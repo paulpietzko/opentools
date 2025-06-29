@@ -196,10 +196,8 @@ export default function TextDiffPage() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Text Diff Checker
-          </h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-4xl font-bold mb-4">Text Diff Checker</h1>
+          <p className="text-xl">
             Compare two texts and see the differences highlighted
           </p>
         </div>
@@ -209,9 +207,7 @@ export default function TextDiffPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Old Text */}
               <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700">
-                  Old Text
-                </label>
+                <label className="block text-sm font-medium">Old Text</label>
                 <Textarea
                   value={oldText}
                   onChange={(e) => setOldText(e.target.value)}
@@ -219,12 +215,9 @@ export default function TextDiffPage() {
                   className="min-h-[300px] font-mono text-sm"
                 />
               </div>
-
               {/* New Text */}
               <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700">
-                  New Text
-                </label>
+                <label className="block text-sm font-medium">New Text</label>
                 <Textarea
                   value={newText}
                   onChange={(e) => setNewText(e.target.value)}
@@ -233,7 +226,6 @@ export default function TextDiffPage() {
                 />
               </div>
             </div>
-
             <div className="text-center">
               <Button
                 onClick={handleCheckDiff}
@@ -248,7 +240,7 @@ export default function TextDiffPage() {
         ) : (
           /* Diff Results */
           <div className="space-y-6">
-            <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center justify-between bg-muted border border-border rounded-lg p-4">
               <div className="flex items-center space-x-6">
                 {stats.removals > 0 && (
                   <span className="text-sm text-red-600 font-medium">
@@ -262,9 +254,7 @@ export default function TextDiffPage() {
                   </span>
                 )}
                 {stats.removals === 0 && stats.additions === 0 && (
-                  <span className="text-sm text-gray-600">
-                    No differences found
-                  </span>
+                  <span className="text-sm">No differences found</span>
                 )}
                 <Button
                   onClick={() => handleCopy("left")}
@@ -289,10 +279,9 @@ export default function TextDiffPage() {
                 New Comparison
               </Button>
             </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
               {/* Left Side - old text (red) */}
-              <div className="border border-gray-200 bg-white p-4 font-mono text-sm">
+              <div className="border border-border bg-background p-4 font-mono text-sm">
                 <DiffText
                   oldText={oldText}
                   newText={newText}
@@ -300,9 +289,8 @@ export default function TextDiffPage() {
                   onDiffClick={onDiffClick}
                 />
               </div>
-
               {/* Right Side - new text (green) */}
-              <div className="border border-gray-200 bg-white p-4 font-mono text-sm">
+              <div className="border border-border bg-background p-4 font-mono text-sm">
                 <DiffText
                   oldText={oldText}
                   newText={newText}
