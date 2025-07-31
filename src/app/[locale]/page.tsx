@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Github, Zap, Lock, Wrench, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function HomePage() {
   const t = useTranslations("LandingPage");
@@ -12,14 +12,6 @@ export default function HomePage() {
     <div className="min-h-screen">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center space-y-8">
-          {/* Status Badge */}
-          <Badge
-            variant="secondary"
-            className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700"
-          >
-            {t("statusBadge")}
-          </Badge>
-
           {/* Main Heading */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
@@ -28,6 +20,30 @@ export default function HomePage() {
             <p className="text-xl max-w-2xl mx-auto leading-relaxed">
               {t("mainSubheading")}
             </p>
+          </div>
+
+          {/* Sponsor Block */}
+          <div className="mt-12 flex justify-center">
+            <a
+              href="https://nanosights.dev/?utm_source=opentools"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-6 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition"
+              aria-label="Sponsored by Nanosights"
+            >
+              <Image
+                src="https://nanosights.dev/images/logo.svg"
+                alt="Nanosights Logo"
+                className="h-8 w-8"
+                width={32}
+                height={32}
+              />
+              <span className="text-sm text-gray-700 dark:text-gray-200">
+                Sponsored by{" "}
+                <span className="font-semibold">Nanosights.dev</span> —
+                Analytics for indie hackers
+              </span>
+            </a>
           </div>
 
           {/* Feature Cards */}

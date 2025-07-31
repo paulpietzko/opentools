@@ -7,10 +7,22 @@ import { type Tool } from "@/lib/tools-data";
 
 export default function ToolCard({ tool }: { tool: Tool }) {
   const Icon = tool.icon;
+  const isFeatured = tool.featured; // assumes Tool has a 'featured' boolean property
 
   return (
-    <Card>
+    <Card
+      className={
+        isFeatured
+          ? "border-2 border-yellow-400 shadow-lg relative"
+          : ""
+      }
+    >
       <CardContent className="p-8 text-center">
+        {isFeatured && (
+          <Badge className="absolute top-4 right-4 z-10" variant="destructive">
+            Featured
+          </Badge>
+        )}
         <div className="mb-6">
           <div className="inline-flex p-4 bg-muted rounded-lg mb-4">
             <Icon className="h-8 w-8" />

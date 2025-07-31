@@ -1,4 +1,4 @@
-import { Edit, FileImage, GitCompare, LucideProps } from "lucide-react";
+import { ChartNoAxesColumn, Edit, FileImage, GitCompare, LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 export interface Tool {
@@ -32,7 +32,7 @@ export const tools: Tool[] = [
     icon: GitCompare,
     status: "available",
     href: "/tools/diff-checker",
-    featured: true,
+    featured: false,
   },
   {
     id: "color-picker",
@@ -45,6 +45,16 @@ export const tools: Tool[] = [
     featured: false,
   },
   {
+    id: "analytic-metrics",
+    name: "Analytic Metrics",
+    description: "Analyze and visualize data with various metrics",
+    category: "utility",
+    icon: ChartNoAxesColumn,
+    status: "available",
+    href: "https://www.nanosights.dev",
+    featured: true,
+  },
+  {
     id: "image-editor",
     name: "Image Editor",
     description: "Edit images with rotation, resizing, filters, and more",
@@ -52,7 +62,7 @@ export const tools: Tool[] = [
     icon: Edit,
     status: "available",
     href: "/tools/image-editor",
-    featured: true,
+    featured: false,
   },
   {
     id: "image-compressor",
